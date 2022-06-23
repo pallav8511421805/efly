@@ -53,7 +53,7 @@ function Header(props) {
             <NavLink to={"/home"} exact>Home</NavLink>
             <NavLink to={"/fashian"} exact>Fashion</NavLink>
             <NavLink to={"/Electronic"} exact>Electronic</NavLink>
-            <NavLink to={"/Electronic"} exact>Jewellery</NavLink>
+            <NavLink to={"/Jwellery"} exact>Jewellery</NavLink>
           </div>
           <span className="toggle_icon" onClick={openNav}><img src="images/toggle-icon.png" /></span>
           <div className="dropdown">
