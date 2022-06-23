@@ -1,15 +1,49 @@
 import React from 'react';
+import * as yup from 'yup';
+import {Formik,Form} from 'formik';
+import { useFormik } from 'formik';
 
 function Footer(props) {
+
+    const schema = yup.object().shape({
+        name: yup.string().required("Please enter your name."),
+        email: yup.string().email("Please enter your vaild email id.").required("Please enter your email id."),
+      password: yup.string().required("Please enter your password.")
+      });
+        const formik = useFormik({
+          initialValues: {
+            name: '',
+            email: '',
+            password:'',
+          },
+          validationSchema:schema,
+          onSubmit: values => {
+            alert(JSON.stringify(values, null, 2));
+          },
+        });
     return (
         <>
             <div className="footer_section layout_padding">
                 <div className="container">
                     <div className="footer_logo"><a href="index.html"><img src="images/footer-logo.png" /></a></div>
-                    <div className="input_bt">
-                        <input type="text" className="mail_bt" placeholder="Your Email" name="Your Email" />
-                        <span className="subscribe_bt" id="basic-addon2"><a href="#">Subscribe</a></span>
+
+                    <Formik>
+                        <Form>
+                        <div className="input_bt">
+                        <input type="email" className="mail_bt" placeholder="Your name" name="name" />
                     </div>
+                    <div className="input_bt">
+                        <input type="text" className="mail_bt" placeholder="Your email" name="email" />
+                    </div>
+                    <div className="input_bt">
+                        <input type="password" className="mail_bt" placeholder="Your password" name="password" />
+                    </div>
+                    <div style={{margin:"50px 0",textAlign:'center'}}>
+                    <button style={{textAlign:"center",width:"200px",height:"40px",borderRadius:"15px",background:"rgb(242, 101, 34)",color:"white",fontSize:"20px"}} type="submit">Submit</button>
+                    </div>
+                        </Form>
+                    </Formik>
+                    
                     <div className="footer_menu">
                         <ul>
                             <li><a href="#">Best Sellers</a></li>
