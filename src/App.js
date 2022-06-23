@@ -3,7 +3,6 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Electonic from "./containers/Electonic";
 import Fashian from "./containers/Fashian";
-import Form from "./containers/Form";
 import Home from "./containers/Home";
 import Jwellery from "./containers/Jwellery";
 function App() {
@@ -15,7 +14,6 @@ function App() {
       <Route path={"/fashian"} exact component={Fashian}/>
       <Route path={"/Electronic"} exact component={Electonic}/>
       <Route path={"/Jwellery"} exact component={Jwellery}/>
-      <Route path={"/Form"} exact component={Form}/>
     </Switch>
     <Footer/>
     </>
