@@ -51,8 +51,8 @@ function Header(props) {
           <div id="mySidenav" className="sidenav">
             <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>×</a>
             <NavLink to={"/home"} exact>Home</NavLink>
-            <a href="fashion.html">Fashion</a>
-            <a href="electronic.html">Electronic</a>
+            <NavLink to={"/fashian"} exact>Fashion</NavLink>
+            <NavLink to={"/Electronic"} exact>Electronic</NavLink>
             <a href="jewellery.html">Jewellery</a>
           </div>
           <span className="toggle_icon" onClick={openNav}><img src="images/toggle-icon.png" /></span>
