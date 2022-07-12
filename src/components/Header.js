@@ -21,11 +21,10 @@ function Header(props) {
           <div className="col-sm-12">
             <div className="custom_menu">
               <ul>
-                <li><NavLink to={"/home"} exact>Best Sellers</NavLink></li>
-                <li><a href="#">Gift Ideas</a></li>
-                <li><a href="#">New Releases</a></li>
-                <li><a href="#">Today's Deals</a></li>
-                <li><a href="#">Customer Service</a></li>
+                <li><NavLink to={"/home"} exact>Home</NavLink></li>
+                <li><NavLink to={"/fashian"} exact>Fashion</NavLink></li>
+                <li><NavLink to={"/Electronic"} exact>Electronic</NavLink></li>
+                <li><NavLink to={"/Jwellery"} exact>Jewellery</NavLink></li>
               </ul>
             </div>
           </div>
