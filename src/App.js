@@ -5,6 +5,7 @@ import Electonic from "./containers/Electonic";
 import Fashian from "./containers/Fashian";
 import Home from "./containers/Home";
 import Jwellery from "./containers/Jwellery";
+import Login from "./containers/Login";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
       <Route path={"/fashian"} exact component={Fashian}/>
       <Route path={"/Electronic"} exact component={Electonic}/>
       <Route path={"/Jwellery"} exact component={Jwellery}/>
+      <Route path={"/Login"} exact component={Login}/>
     </Switch>
     <Footer/>
     </>
