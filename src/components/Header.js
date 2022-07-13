@@ -49,7 +49,7 @@ function Header(props) {
           <div className="container">
             <div className="containt_main">
               <div id="mySidenav" className="sidenav">
-                <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>×</a>
+                <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>x</a>
                 <ul>
                   <li><a href="#">Best Sellers</a></li>
                   <li><a href="#">Gift Ideas</a></li>
