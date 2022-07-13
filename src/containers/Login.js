@@ -63,7 +63,7 @@ function Login(props) {
                             <button style={{ textAlign: "center", width: "200px", height: "40px", borderRadius: "15px", background: "rgb(242, 101, 34)", color: "white", fontSize: "20px" }} type="submit">Submit</button>
                         </div>
                     </Form>
-                </Formik>
+                </Formik> 
             </div>
         </div>
     );
