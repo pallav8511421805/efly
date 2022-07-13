@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
+import { islogin } from './test';
 
 function Private({ component:Component,...rest}) {
     return (
