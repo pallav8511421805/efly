@@ -1,72 +1,195 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
-import { Formik, Form } from 'formik';
-import { useFormik } from 'formik';
-import { useState } from 'react';
+import {Form, Formik, useFormik} from 'formik';
+import { useDispatch } from 'react-redux';
+import { Forgetpassword, signinaction, signingoogle, signupaction } from '../redux/actions/signup.action';
 
 function Login(props) {
-    const [login, setlogin] = useState("logindata");
-
-    const handlecart = () => {
-        localStorage.setItem("user", "123456")
+  const [usertype, setusertype] = useState("Log in");
+  const [reset, setreset] = useState(false);
+  const dispatch = useDispatch();
+      
+  let initialVal;
+  let mainschema;
+  if(usertype == "Log in"){
+    initialVal ={
+      password:'',
+      email: '',
     }
-
-    const schema = yup.object().shape({
-        name: yup.string().required("Please enter your name."),
-        email: yup.string().email("Please enter your vaild email id.").required("Please enter your email id."),
-        password: yup.string().required("Please enter your password.")
+    mainschema = yup.object().shape({
+      email: yup.string().email("Please enter your vaild email id.").required("Please enter your email id."),
+      password: yup.string().required("Please enter your password.")
     });
+  } else if(usertype == "Sign up"){
+    initialVal ={
+      name: '',
+      password:'',
+      email: '',
+    }
+    mainschema = yup.object().shape({
+      name: yup.string().required("Please enter your name."),
+      email: yup.string().email("Please enter your vaild email id.").required("Please enter your email id."),
+      password: yup.string().required("Please enter your password.")
+    });
+  } else if (reset == true){
+    initialVal ={
+       email: '',
+    }
+    mainschema = yup.object().shape({
+      email: yup.string().email("Please enter your vaild email id.").required("Please enter your email id."),
+    });
+  }
+
+    let schema = mainschema;
+
+    const handlelogin = (values)=>{
+      localStorage.setItem('user','123');
+    } 
+
     const formik = useFormik({
-        initialValues: {
-            name: '',
-            email: '',
-            password: '',
-        },
-        validationSchema: schema,
-        onSubmit: values => {
-            if (login === "logindata") {
-                handlecart()
-            } else {
-                alert(JSON.stringify(values, null, 2));
+      initialValues: initialVal,
+     validationSchema : schema,  
+      onSubmit: values => {
+        if(usertype === "Log in"){
+          // handlelogin(values);
+          dispatch(signinaction(values))
+        } else{
+          // alert(JSON.stringify(values, null, 2));
+          dispatch(signupaction(values))
+        }
+      },
+    }
+    )
+    let {errors,handleBlur,handleSubmit,touched,values ,handleChange} = formik;
+    const handlegoogle =() =>{
+     dispatch(signingoogle())
+    }
+    const handleforget = () =>{
+      console.log('password forget');
+    }
+  return (
+    <div className="container">
+      <div className="section-title">
+        {
+          reset ? <h2>Forget password</h2> : usertype === "Log in" ? <h2>Log in</h2> :
+            <h2>Sign up</h2>
+        }
+      </div>
+      <div className="row mt-5">
+        <div className="col-lg-12 mt-5 mt-lg-0">
+          <Formik validationSchema>
+          <Form onSubmit={handleSubmit} className="php-email-form">
+            <>
+              {
+                usertype === "Log in" ? null :
+                  <>
+                    <div className="row justify-content-center">
+                      <div className="col-md-6 form-group my-1">
+                        <input type="text" name="name" className="form-control shadow-none" id="name" placeholder="Your Name"
+                        onChange={handleChange} 
+                        onBlur={handleBlur}
+                        value={values.name}
+                        />
+                      </div>
+                      {errors.name || touched.name ?<p className='text-center'>{errors.name}</p>: ""}
+                    </div>
+                    <div className="row justify-content-center">
+                      <div className="col-md-6 form-group my-1">
+                        <input type="email" className="form-control shadow-none" name="email" id="email" placeholder="Your Email" 
+                        onChange={handleChange} 
+                        onBlur={handleBlur}
+                        value={values.email}
+                        />
+                      </div>
+                      {errors.email && touched.email ? <p className='text-center'>{errors.email}</p>: ""}
+                    </div>
+
+                    <div className="row justify-content-center">
+                      <div className="col-md-6 form-group my-1">
+                        <input type="password" name="password" className="form-control shadow-none" id="password" placeholder="Your password"
+                        onChange={handleChange} 
+                        onBlur={handleBlur}
+                        value={values.password}
+                        />
+                      </div>
+                      {errors.password && touched.password ? <p className='text-center'>{errors.password}</p>: ""}
+                    </div>
+                  </>
+              }
+
+              {
+                reset ?
+                  <div className="row justify-content-center">
+                    <div className="col-md-6 form-group my-1">
+                      <input type="email" className="form-control shadow-none" name="email" id="email" placeholder="Your Email"
+                      onChange={handleChange} 
+                      onBlur={handleBlur}
+                      value={values.email}
+                      />
+                    </div>
+                    {errors.email && touched.email ? <p className='text-center'>{errors.email}</p>: ""}
+                  </div>
+                  :
+                  usertype == "Log in" ?
+                    <>
+                      <div className="row justify-content-center">
+                        <div className="col-md-6 form-group my-1">
+                          <input type="email" className="form-control shadow-none" name="email" id="email" placeholder="Your Email" 
+                          onChange={handleChange} 
+                          onBlur={handleBlur}
+                          value={values.email}/>
+                        </div>
+                        {errors.email && touched.email ? <p className='text-center'>{errors.email}</p>: ""}
+                      </div>
+
+                      <div className="row justify-content-center">
+                        <div className="col-md-6 form-group my-1">
+                          <input type="password" name="password" className="form-control shadow-none" id="password" placeholder="Your password" 
+                          onChange={handleChange} 
+                          onBlur={handleBlur}
+                          value={values.password}
+                          />
+                        </div>
+                        {errors.password && touched.password ? <p className='text-center'>{errors.password}</p>: ""}
+                      </div>
+                    </>
+                    : null
+              }
+
+            </>
+            {
+              reset ? <div className="text-center my-3"><button className="appointment-btn scrollto border-0" type='button' onClick={()=>handleforget()}>Change password</button></div> : usertype === "Log in" ? <div className="text-center my-3"><button className="appointment-btn scrollto border-0" type='submit'>Log in</button></div> : <div className="text-center my-3"><button className="appointment-btn scrollto border-0" type='submit'>Sign up</button></div>
             }
-
-        },
-    });
-    let { errors, handleBlur, handleSubmit, touched, values, handleChange } = formik;
-
-    return (
-        <div className="footer_section layout_padding">
-            <div className="container">
-                <div className="footer_logo"><p style={{ color: "white", textAlign: "center", fontSize: "60px", fontWeight: "bold" }}>Login</p></div>
-
-                <Formik validationSchema>
-                    <Form onSubmit={handleSubmit}>
-                        <div className="input_bt">
-                            <input type="text" onChange={handleChange} onBlur={handleBlur} value={values.name} className="mail_bt" placeholder="Your name" name="name" />
-                            {errors.name || touched.name ? <p style={{ color: "white" }}>{errors.name}</p> : ""}
-                        </div>
-                        <div className="input_bt">
-                            <input type="email"
-
-                                onChange={handleChange} onBlur={handleBlur}
-                                value={values.email}
-                                className="mail_bt" placeholder="Your email" name="email" />
-                            {errors.email && touched.email ? <p style={{ color: "white" }}>{errors.email}</p> : ""}
-                        </div>
-                        <div className="input_bt">
-                            <input type="password" className="mail_bt"
-                                onChange={handleChange} onBlur={handleBlur} value={values.password}
-                                placeholder="Your password" name="password" />
-                            {errors.password && touched.password ? <p style={{ color: "white" }}>{errors.password}</p> : ""}
-                        </div>
-                        <div style={{ margin: "50px 0", textAlign: 'center' }}>
-                            <button style={{ textAlign: "center", width: "200px", height: "40px", borderRadius: "15px", background: "rgb(242, 101, 34)", color: "white", fontSize: "20px" }} type="submit">Submit</button>
-                        </div>
-                    </Form>
-                </Formik> 
+           <>
+           {
+              usertype === 'Log in' && reset === false ? <div className='text-center my-3'><button className='appointment-btn scrollto border-0' onClick={()=>handlegoogle()} type="button">Sign in With Google</button></div> : null
+            }
+             {
+                reset ? null : usertype === "Log in" ? <div className="text-center my-3">
+                  <button className="appointment-btn scrollto border-0 ms-0" onClick={() => {
+                    setreset(true);
+                  }}>Forgot password ?</button></div> : null
+              }
+           </>
+            <div className="text-center">
+              {
+                reset ? null : usertype === "Log in" ?
+                  <p>Create a new account <span>
+                      <a className="appointment-btn scrollto border-0 ms-0" onClick={() => { setusertype("Sign up"); setreset(false) }}>Log in</a>
+                  </span>
+                  </p>
+                  : <p>Already have an account? <span>
+                    <a className="appointment-btn scrollto border-0 ms-0" onClick={() => { setusertype("Log in"); setreset(false) }}>Sign up</a>
+                  </span></p>
+              }
             </div>
+          </Form>
+          </Formik>
         </div>
-    );
+      </div>
+    </div>
+
+  );
 }
 
 export default Login;
