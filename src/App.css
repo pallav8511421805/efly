@@ -37,3 +37,54 @@
     transform: rotate(360deg);
   }
 }
+
+.logbtn {
+  width: 250px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  color: white !important;
+  padding: 5px 25px;
+  background-color: #f26522;
+  border-radius: 25px;
+}
+
+.logbtn1 {
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
+  color: white !important;
+  padding: 5px 25px;
+  background-color: #f26522;
+  border-radius: 25px;
+}
+
+.forgetbtn {
+  width: 250px;
+  height: 40px;
+  line-height: 10px;
+  font-size: 18px;
+  color: white !important;
+  padding: 15px 25px;
+  background-color: #f26522;
+  border-radius: 25px;
+}
+
+.logtag {
+  text-align: center;
+  color: #282c34;
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.logtag1 {
+  color: #282c34;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.logerror {
+  color: #282c34;
+  font-size: 16px;
+  font-weight: normal;
+}

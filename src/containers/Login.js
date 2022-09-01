@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as yup from 'yup';
 import {Form, Formik, useFormik} from 'formik';
+import '../App.css';
 
 function Login(props) {
   const [usertype, setusertype] = useState("Log in");
@@ -63,8 +64,8 @@ function Login(props) {
     <div className="container">
       <div className="section-title">
         {
-          reset ? <h2>Forget password</h2> : usertype === "Log in" ? <h2>Log in</h2> :
-            <h2>Sign up</h2>
+          reset ? <h2 className='logtag'>Forget password</h2> : usertype === "Log in" ? <h2 className='logtag'>Log in</h2> :
+            <h2 className='logtag'>Sign up</h2>
         }
       </div>
       <div className="row mt-5">
@@ -83,7 +84,7 @@ function Login(props) {
                         value={values.name}
                         />
                       </div>
-                      {errors.name || touched.name ?<p className='text-center'>{errors.name}</p>: ""}
+                      {errors.name || touched.name ?<p className='text-center logerror'>{errors.name}</p>: ""}
                     </div>
                     <div className="row justify-content-center">
                       <div className="col-md-6 form-group my-1">
@@ -93,7 +94,7 @@ function Login(props) {
                         value={values.email}
                         />
                       </div>
-                      {errors.email && touched.email ? <p className='text-center'>{errors.email}</p>: ""}
+                      {errors.email && touched.email ? <p className='text-center logerror'>{errors.email}</p>: ""}
                     </div>
 
                     <div className="row justify-content-center">
@@ -104,7 +105,7 @@ function Login(props) {
                         value={values.password}
                         />
                       </div>
-                      {errors.password && touched.password ? <p className='text-center'>{errors.password}</p>: ""}
+                      {errors.password && touched.password ? <p className='text-center logerror'>{errors.password}</p>: ""}
                     </div>
                   </>
               }
@@ -119,7 +120,7 @@ function Login(props) {
                       value={values.email}
                       />
                     </div>
-                    {errors.email && touched.email ? <p className='text-center'>{errors.email}</p>: ""}
+                    {errors.email && touched.email ? <p className='text-center logerror'>{errors.email}</p>: ""}
                   </div>
                   :
                   usertype == "Log in" ?
@@ -131,7 +132,7 @@ function Login(props) {
                           onBlur={handleBlur}
                           value={values.email}/>
                         </div>
-                        {errors.email && touched.email ? <p className='text-center'>{errors.email}</p>: ""}
+                        {errors.email && touched.email ? <p className='text-center logerror'>{errors.email}</p>: ""}
                       </div>
 
                       <div className="row justify-content-center">
@@ -142,7 +143,7 @@ function Login(props) {
                           value={values.password}
                           />
                         </div>
-                        {errors.password && touched.password ? <p className='text-center'>{errors.password}</p>: ""}
+                        {errors.password && touched.password ? <p className='text-center logerror'>{errors.password}</p>: ""}
                       </div>
                     </>
                     : null
@@ -150,15 +151,15 @@ function Login(props) {
 
             </>
             {
-              reset ? <div className="text-center my-3"><button className="appointment-btn scrollto border-0" type='button' >Change password</button></div> : usertype === "Log in" ? <div className="text-center my-3"><button className="appointment-btn scrollto border-0" type='submit'>Log in</button></div> : <div className="text-center my-3"><button className="appointment-btn scrollto border-0" type='submit'>Sign up</button></div>
+              reset ? <div className="text-center my-3"><button className='forgetbtn' type='button' >Change password</button></div> : usertype === "Log in" ? <div className="text-center my-3"><button className='logbtn1' type='submit'>Log in</button></div> : <div className="text-center my-3"><button className='logbtn1' type='submit'>Sign up</button></div>
             }
            <>
            {
-              usertype === 'Log in' && reset === false ? <div className='text-center my-3'><button className='appointment-btn scrollto border-0' type="button">Sign in With Google</button></div> : null
+              usertype === 'Log in' && reset === false ? <div className='text-center my-3'><button className='forgetbtn' type="button">Sign in With Google</button></div> : null
             }
              {
                 reset ? null : usertype === "Log in" ? <div className="text-center my-3">
-                  <button className="appointment-btn scrollto border-0 ms-0" onClick={() => {
+                  <button className="forgetbtn" onClick={() => {
                     setreset(true);
                   }}>Forgot password ?</button></div> : null
               }
@@ -166,12 +167,12 @@ function Login(props) {
             <div className="text-center">
               {
                 reset ? null : usertype === "Log in" ?
-                  <p>Create a new account <span>
-                      <a onClick={() => { setusertype("Sign up"); setreset(false) }}>Log in</a>
+                  <p className='logtag1'>Create a new account <span>
+                      <a className='logbtn' onClick={() => { setusertype("Sign up"); setreset(false) }}>Log in</a>
                   </span>
                   </p>
-                  : <p>Already have an account? <span>
-                    <a onClick={() => { setusertype("Log in"); setreset(false) }}>Sign up</a>
+                  : <p className='logtag1'>Already have an account? <span>
+                    <a className='logbtn' onClick={() => { setusertype("Log in"); setreset(false) }}>Sign up</a>
                   </span></p>
               }
             </div>
