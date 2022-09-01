@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import * as yup from 'yup';
 import {Form, Formik, useFormik} from 'formik';
-import './App.css';
 
 function Login(props) {
   const [usertype, setusertype] = useState("Log in");
@@ -168,11 +167,11 @@ function Login(props) {
               {
                 reset ? null : usertype === "Log in" ?
                   <p>Create a new account <span>
-                      <a className="loginbtn" onClick={() => { setusertype("Sign up"); setreset(false) }}>Log in</a>
+                      <a onClick={() => { setusertype("Sign up"); setreset(false) }}>Log in</a>
                   </span>
                   </p>
                   : <p>Already have an account? <span>
-                    <a className="appointment-btn scrollto border-0 ms-0" onClick={() => { setusertype("Log in"); setreset(false) }}>Sign up</a>
+                    <a onClick={() => { setusertype("Log in"); setreset(false) }}>Sign up</a>
                   </span></p>
               }
             </div>
