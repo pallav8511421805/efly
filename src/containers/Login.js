@@ -1,188 +1,309 @@
-import React, { useState } from 'react';
-import * as yup from 'yup';
-import {Form, Formik, useFormik} from 'formik';
-import '../App.css';
+import React, { useState } from 'react'
+import * as yup from 'yup'
+import { Form, Formik, useFormik } from 'formik'
+import '../App.css'
 
 function Login(props) {
-  const [usertype, setusertype] = useState("Log in");
-  const [reset, setreset] = useState(false);
-      
-  let initialVal;
-  let mainschema;
-  if(usertype == "Log in"){
-    initialVal ={
-      password:'',
+  const [usertype, setusertype] = useState('logpage')
+  const [reset, setreset] = useState(false)
+
+  let initialVal
+  let mainschema
+  if (usertype == 'logpage') {
+    initialVal = {
+      password: '',
       email: '',
     }
     mainschema = yup.object().shape({
-      email: yup.string().email("Please enter your vaild email id.").required("Please enter your email id."),
-      password: yup.string().required("Please enter your password.")
-    });
-  } else if(usertype == "Sign up"){
-    initialVal ={
+      email: yup
+        .string()
+        .email('Please enter your vaild email id.')
+        .required('Please enter your email id.'),
+      password: yup.string().required('Please enter your password.'),
+    })
+  } else if (usertype == 'Sign up') {
+    initialVal = {
       name: '',
-      password:'',
+      password: '',
       email: '',
     }
     mainschema = yup.object().shape({
-      name: yup.string().required("Please enter your name."),
-      email: yup.string().email("Please enter your vaild email id.").required("Please enter your email id."),
-      password: yup.string().required("Please enter your password.")
-    });
-  } else if (reset == true){
-    initialVal ={
-       email: '',
+      name: yup.string().required('Please enter your name.'),
+      email: yup
+        .string()
+        .email('Please enter your vaild email id.')
+        .required('Please enter your email id.'),
+      password: yup.string().required('Please enter your password.'),
+    })
+  } else if (reset == true) {
+    initialVal = {
+      email: '',
     }
     mainschema = yup.object().shape({
-      email: yup.string().email("Please enter your vaild email id.").required("Please enter your email id."),
-    });
+      email: yup
+        .string()
+        .email('Please enter your vaild email id.')
+        .required('Please enter your email id.'),
+    })
   }
 
-    let schema = mainschema;
+  let schema = mainschema
 
-    const handlelogin = (values)=>{
-      localStorage.setItem('user','123');
-    } 
+  const handlelogin = (values) => {
+    localStorage.setItem('user', '123')
+  }
 
-    const formik = useFormik({
-      initialValues: initialVal,
-     validationSchema : schema,  
-      onSubmit: values => {
-        if(usertype === "Log in"){
-          handlelogin(values);
-        } else{
-          alert(JSON.stringify(values, null, 2));
-        }
-      },
-    }
-    )
-    let {errors,handleBlur,handleSubmit,touched,values ,handleChange} = formik;
-    const handleforget = () =>{
-      console.log('password forget');
-    }
+  const formik = useFormik({
+    initialValues: initialVal,
+    validationSchema: schema,
+    onSubmit: (values) => {
+      if (usertype === 'logpage') {
+        handlelogin(values)
+      } else {
+        alert(JSON.stringify(values, null, 2))
+      }
+    },
+  })
+  let {
+    errors,
+    handleBlur,
+    handleSubmit,
+    touched,
+    values,
+    handleChange,
+  } = formik
   return (
     <div className="container">
       <div className="section-title">
-        {
-          reset ? <h2 className='logtag'>Forget password</h2> : usertype === "Log in" ? <h2 className='logtag'>Log in</h2> :
-            <h2 className='logtag'>Sign up</h2>
-        }
+        {reset ? (
+          <h2 className="logtag">Forget password</h2>
+        ) : usertype === 'logpage' ? (
+          <h2 className="logtag">Log in</h2>
+        ) : (
+          <h2 className="logtag">Sign up</h2>
+        )}
       </div>
       <div className="row mt-5">
         <div className="col-lg-12 mt-5 mt-lg-0">
           <Formik validationSchema>
-          <Form onSubmit={handleSubmit} className="php-email-form">
-            <>
-              {
-                usertype === "Log in" ? null :
+            <Form onSubmit={handleSubmit} className="php-email-form">
+              <>
+                {usertype === 'logpage' ? null : (
                   <>
                     <div className="row justify-content-center">
                       <div className="col-md-6 form-group my-1">
-                        <input type="text" name="name" className="form-control shadow-none" id="name" placeholder="Your Name"
-                        onChange={handleChange} 
-                        onBlur={handleBlur}
-                        value={values.name}
-                        />
-                      </div>
-                      {errors.name || touched.name ?<p className='text-center logerror'>{errors.name}</p>: ""}
-                    </div>
-                    <div className="row justify-content-center">
-                      <div className="col-md-6 form-group my-1">
-                        <input type="email" className="form-control shadow-none" name="email" id="email" placeholder="Your Email" 
-                        onChange={handleChange} 
-                        onBlur={handleBlur}
-                        value={values.email}
-                        />
-                      </div>
-                      {errors.email && touched.email ? <p className='text-center logerror'>{errors.email}</p>: ""}
-                    </div>
-
-                    <div className="row justify-content-center">
-                      <div className="col-md-6 form-group my-1">
-                        <input type="password" name="password" className="form-control shadow-none" id="password" placeholder="Your password"
-                        onChange={handleChange} 
-                        onBlur={handleBlur}
-                        value={values.password}
-                        />
-                      </div>
-                      {errors.password && touched.password ? <p className='text-center logerror'>{errors.password}</p>: ""}
-                    </div>
-                  </>
-              }
-
-              {
-                reset ?
-                  <div className="row justify-content-center">
-                    <div className="col-md-6 form-group my-1">
-                      <input type="email" className="form-control shadow-none" name="email" id="email" placeholder="Your Email"
-                      onChange={handleChange} 
-                      onBlur={handleBlur}
-                      value={values.email}
-                      />
-                    </div>
-                    {errors.email && touched.email ? <p className='text-center logerror'>{errors.email}</p>: ""}
-                  </div>
-                  :
-                  usertype == "Log in" ?
-                    <>
-                      <div className="row justify-content-center">
-                        <div className="col-md-6 form-group my-1">
-                          <input type="email" className="form-control shadow-none" name="email" id="email" placeholder="Your Email" 
-                          onChange={handleChange} 
+                        <input
+                          type="text"
+                          name="name"
+                          className="form-control shadow-none"
+                          id="name"
+                          placeholder="Your Name"
+                          onChange={handleChange}
                           onBlur={handleBlur}
-                          value={values.email}/>
-                        </div>
-                        {errors.email && touched.email ? <p className='text-center logerror'>{errors.email}</p>: ""}
+                          value={values.name}
+                        />
                       </div>
+                      {errors.name && touched.name ? (
+                        <div className="text-center logerror">
+                          {errors.name}
+                        </div>
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                    <div className="row justify-content-center">
+                      <div className="col-md-6 form-group my-1">
+                        <input
+                          type="email"
+                          className="form-control shadow-none"
+                          name="email"
+                          id="email"
+                          placeholder="Your Email"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                        />
+                      </div>
+                      {errors.email && touched.email ? (
+                        <div className="text-center logerror">
+                          {errors.email}
+                        </div>
+                      ) : (
+                        ''
+                      )}
+                    </div>
 
-                      <div className="row justify-content-center">
-                        <div className="col-md-6 form-group my-1">
-                          <input type="password" name="password" className="form-control shadow-none" id="password" placeholder="Your password" 
-                          onChange={handleChange} 
+                    <div className="row justify-content-center">
+                      <div className="col-md-6 form-group my-1">
+                        <input
+                          type="password"
+                          name="password"
+                          className="form-control shadow-none"
+                          id="password"
+                          placeholder="Your password"
+                          onChange={handleChange}
                           onBlur={handleBlur}
                           value={values.password}
-                          />
-                        </div>
-                        {errors.password && touched.password ? <p className='text-center logerror'>{errors.password}</p>: ""}
+                        />
                       </div>
-                    </>
-                    : null
-              }
+                      {errors.password && touched.password ? (
+                        <div className="text-center logerror">
+                          {errors.password}
+                        </div>
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                  </>
+                )}
 
-            </>
-            {
-              reset ? <div className="text-center my-3"><button className='forgetbtn' type='button' >Change password</button></div> : usertype === "Log in" ? <div className="text-center my-3"><button className='logbtn1' type='submit'>Log in</button></div> : <div className="text-center my-3"><button className='logbtn1' type='submit'>Sign up</button></div>
-            }
-           <>
-           {
-              usertype === 'Log in' && reset === false ? <div className='text-center my-3'><button className='forgetbtn' type="button">Sign in With Google</button></div> : null
-            }
-             {
-                reset ? null : usertype === "Log in" ? <div className="text-center my-3">
-                  <button className="forgetbtn" onClick={() => {
-                    setreset(true);
-                  }}>Forgot password ?</button></div> : null
-              }
-           </>
-            <div className="text-center">
-              {
-                reset ? null : usertype === "Log in" ?
-                  <p className='logtag1'>Create a new account <span>
-                      <a className='logbtn' onClick={() => { setusertype("Sign up"); setreset(false) }}>Log in</a>
-                  </span>
+                {reset ? (
+                  <div className="row justify-content-center">
+                    <div className="col-md-6 form-group my-1">
+                      <input
+                        type="email"
+                        className="form-control shadow-none"
+                        name="email"
+                        id="email"
+                        placeholder="Your Email"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.email}
+                      />
+                    </div>
+                    {errors.email && touched.email ? (
+                      <div className="text-center logerror">{errors.email}</div>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                ) : usertype == 'logpage' ? (
+                  <>
+                    <div className="row justify-content-center">
+                      <div className="col-md-6 form-group my-1">
+                        <input
+                          type="email"
+                          className="form-control shadow-none"
+                          name="email"
+                          id="email"
+                          placeholder="Your Email"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                        />
+                      </div>
+                      {errors.email && touched.email ? (
+                        <div className="text-center logerror">
+                          {errors.email}
+                        </div>
+                      ) : (
+                        ''
+                      )}
+                    </div>
+
+                    <div className="row justify-content-center">
+                      <div className="col-md-6 form-group my-1">
+                        <input
+                          type="password"
+                          name="password"
+                          className="form-control shadow-none"
+                          id="password"
+                          placeholder="Your password"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.password}
+                        />
+                      </div>
+                      {errors.password && touched.password ? (
+                        <p className="text-center logerror">
+                          {errors.password}
+                        </p>
+                      ) : (
+                        ''
+                      )}
+                    </div>
+                  </>
+                ) : null}
+              </>
+              {reset ? (
+                <div className="text-center my-3">
+                  <button className="forgetbtn" type="button">
+                    Change password
+                  </button>
+                </div>
+              ) : usertype === 'logpage' ? (
+                <div className="text-center my-3">
+                  <button className="logbtn1" type="submit">
+                    Log in
+                  </button>
+                </div>
+              ) : (
+                <div className="text-center my-3">
+                  <button className="logbtn1" type="submit">
+                    Sign up
+                  </button>
+                </div>
+              )}
+              <>
+                {usertype === 'logpage' && reset === false ? (
+                  <div className="text-center my-3">
+                    <button className="forgetbtn" type="button">
+                      Sign in With Google
+                    </button>
+                  </div>
+                ) : null}
+                {reset ? null : usertype === 'logpage' ? (
+                  <div className="text-center my-3">
+                    <button
+                      className="forgetbtn"
+                      onClick={() => {
+                        setreset(true)
+                      }}
+                    >
+                      Forgot password ?
+                    </button>
+                  </div>
+                ) : null}
+              </>
+              <div className="text-center">
+                {reset ? null : usertype === 'logpage' ? (
+                  <p className="logtag1">
+                    Create a new account{' '}
+                    <span>
+                      <a
+                        className="logbtn"
+                        onClick={() => {
+                          setusertype('Sign up')
+                          setreset(false)
+                        }}
+                      >
+                        Log in
+                      </a>
+                    </span>
                   </p>
-                  : <p className='logtag1'>Already have an account? <span>
-                    <a className='logbtn' onClick={() => { setusertype("Log in"); setreset(false) }}>Sign up</a>
-                  </span></p>
-              }
-            </div>
-          </Form>
+                ) : (
+                  <p className="logtag1">
+                    Already have an account?{' '}
+                    <span>
+                      <a
+                        className="logbtn"
+                        onClick={() => {
+                          setusertype('logpage')
+                          setreset(false)
+                        }}
+                      >
+                        Sign up
+                      </a>
+                    </span>
+                  </p>
+                )}
+              </div>
+            </Form>
           </Formik>
         </div>
       </div>
     </div>
-
-  );
+  )
 }
 
-export default Login;
+export default Login
