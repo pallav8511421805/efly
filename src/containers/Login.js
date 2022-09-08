@@ -9,7 +9,7 @@ function Login(props) {
 
   let initialVal
   let mainschema
-  if (usertype == 'logpage') {
+  if (usertype == 'logpage' && reset === false) {
     initialVal = {
       password: '',
       email: '',
@@ -21,7 +21,7 @@ function Login(props) {
         .required('Please enter your email id.'),
       password: yup.string().required('Please enter your password.'),
     })
-  } else if (usertype == 'Sign up') {
+  } else if (usertype == 'Signup' && reset === false) {
     initialVal = {
       name: '',
       password: '',
@@ -57,7 +57,7 @@ function Login(props) {
     initialValues: initialVal,
     validationSchema: schema,
     onSubmit: (values) => {
-      if (usertype === 'logpage') {
+      if (usertype === 'logpage' && reset === false) {
         handlelogin(values)
       } else {
         alert(JSON.stringify(values, null, 2))
@@ -91,11 +91,11 @@ function Login(props) {
                 {usertype === 'logpage' ? null : (
                   <>
                     <div className="row justify-content-center">
-                      <div className="col-md-6 form-group my-1">
+                      <div className="col-md-6 form-group">
                         <input
                           type="text"
                           name="name"
-                          className="form-control shadow-none"
+                          className="form-control shadow-none d-block"
                           id="name"
                           placeholder="Your Name"
                           onChange={handleChange}
@@ -103,7 +103,7 @@ function Login(props) {
                           value={values.name}
                         />
                       </div>
-                      {errors.name && touched.name ? (
+                      {errors.name || touched.name ? (
                         <div className="text-center logerror">
                           {errors.name}
                         </div>
@@ -112,10 +112,10 @@ function Login(props) {
                       )}
                     </div>
                     <div className="row justify-content-center">
-                      <div className="col-md-6 form-group my-1">
+                      <div className="col-md-6 form-group">
                         <input
                           type="email"
-                          className="form-control shadow-none"
+                          className="form-control shadow-none d-block"
                           name="email"
                           id="email"
                           placeholder="Your Email"
@@ -134,11 +134,11 @@ function Login(props) {
                     </div>
 
                     <div className="row justify-content-center">
-                      <div className="col-md-6 form-group my-1">
+                      <div className="col-md-6 form-group">
                         <input
                           type="password"
                           name="password"
-                          className="form-control shadow-none"
+                          className="form-control shadow-none d-block"
                           id="password"
                           placeholder="Your password"
                           onChange={handleChange}
@@ -159,10 +159,10 @@ function Login(props) {
 
                 {reset ? (
                   <div className="row justify-content-center">
-                    <div className="col-md-6 form-group my-1">
+                    <div className="col-md-6 form-group">
                       <input
                         type="email"
-                        className="form-control shadow-none"
+                        className="form-control shadow-none d-block"
                         name="email"
                         id="email"
                         placeholder="Your Email"
@@ -180,10 +180,10 @@ function Login(props) {
                 ) : usertype == 'logpage' ? (
                   <>
                     <div className="row justify-content-center">
-                      <div className="col-md-6 form-group my-1">
+                      <div className="col-md-6 form-group">
                         <input
                           type="email"
-                          className="form-control shadow-none"
+                          className="form-control shadow-none d-block"
                           name="email"
                           id="email"
                           placeholder="Your Email"
@@ -202,11 +202,11 @@ function Login(props) {
                     </div>
 
                     <div className="row justify-content-center">
-                      <div className="col-md-6 form-group my-1">
+                      <div className="col-md-6 form-group">
                         <input
                           type="password"
                           name="password"
-                          className="form-control shadow-none"
+                          className="form-control shadow-none d-block"
                           id="password"
                           placeholder="Your password"
                           onChange={handleChange}
@@ -215,9 +215,9 @@ function Login(props) {
                         />
                       </div>
                       {errors.password && touched.password ? (
-                        <p className="text-center logerror">
+                        <div className="text-center logerror">
                           {errors.password}
-                        </p>
+                        </div>
                       ) : (
                         ''
                       )}
@@ -273,7 +273,7 @@ function Login(props) {
                       <a
                         className="logbtn"
                         onClick={() => {
-                          setusertype('Sign up')
+                          setusertype('Signup')
                           setreset(false)
                         }}
                       >
